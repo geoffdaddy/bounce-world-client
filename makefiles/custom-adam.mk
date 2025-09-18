@@ -1,0 +1,3 @@
+# COMPILE FLAGS
+
+LIBS += eos

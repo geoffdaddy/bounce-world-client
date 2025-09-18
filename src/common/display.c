@@ -25,6 +25,10 @@
 #include "world.h"
 #include "who.h"
 
+#ifdef __ADAM__
+#include <video/tms99x8.h>
+#endif
+
 #ifdef __ATARI__
 #include <atari.h>
 #include "dlist.h"
@@ -43,6 +47,9 @@
 static unsigned int t1;
 static unsigned int t2;
 static char tmp[4];
+// #elif defined __ADAM__
+// #include "conio_wrapper.h"
+
 #endif
 
 #ifdef BWC_CUSTOM_CPUTC
