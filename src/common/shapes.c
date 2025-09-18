@@ -1,5 +1,7 @@
-#ifndef _CMOC_VERSION_
+#if !defined(_CMOC_VERSION_)
+#if !defined(__ADAM__)
 #include <conio.h>
+#endif
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>

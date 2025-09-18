@@ -11,7 +11,6 @@
 #include "conio_wrapper.h"
 #endif
 
-#define USE_PLATFORM_SPECIFIC_INPUT
 
 extern int getPlatformKey();
 

@@ -13,7 +13,9 @@
 #include <coco.h>
 #include <conio_wrapper.h>
 #else
+#if !defined(__ADAM__)
 #include <conio.h>
+#endif
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>

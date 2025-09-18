@@ -1,7 +1,7 @@
 #include "get_line.h"
 #include <eos.h>
 #include "cursor.h"
-#include <conio.h>
+#include "conio_helpers.h"
 
 
 #define KEY_BACKSPACE    0x08

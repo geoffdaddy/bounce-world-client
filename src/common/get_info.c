@@ -1,6 +1,8 @@
 // #include <atari.h>
-#ifndef _CMOC_VERSION_
+#if !defined (_CMOC_VERSION_)
+#if !defined(__ADAM__)
 #include <conio.h>
+#endif
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -74,6 +76,11 @@ void get_info_changes()
     while (c == 0)
     {
       c = (char)kbhit();
+    }
+#elif defined (USE_PLATFORM_SPECIFIC_INPUT)
+    while(c == 0) 
+    {
+      c = getPlatformKey();
     }
 #else
     while (kbhit() == 0) ;
