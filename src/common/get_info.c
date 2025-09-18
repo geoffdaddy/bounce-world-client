@@ -20,6 +20,8 @@
 
 #ifdef __PMD85__
 #include "conio_wrapper.h"
+#elif defined __ADAM__
+#include "conio_helpers.h"
 #endif
 
 char endpoint_input[61];
@@ -29,6 +31,9 @@ char *version = "2.0.3";
 
 #ifdef _CMOC_VERSION_
 char hxp = 5;
+char txp = 4;
+#elif defined(__ADAM__)
+char hxp = 0;
 char txp = 4;
 #else
 char hxp = 4;
@@ -103,8 +108,11 @@ void get_info_changes()
 void show_header() {
   clrscr();
   init_sound();
-
+#ifdef __ADAM__
+  chlinexy(hxp-1, yps - 1, 30);
+#else
   chlinexy(hxp-2, yps - 1, 36);
+#endif
   revers(1);
   cputsxy(hxp, yps + 1, "                                ");
   cputsxy(hxp, yps + 2, " Welcome to Bouncy World Client ");
@@ -126,6 +134,15 @@ void show_header() {
   cputsxy(hxp + 25, yps + 6, version);
 
   chlinexy(hxp-2, yps + 8, 36);
+#elif defined __ADAM__
+  cputsxy(hxp, yps + 4, " ADAM version by Geoff Oltmans" );
+  cputsxy(hxp, yps + 5, "                                ");
+  revers(0);
+  cputsxy(hxp, yps + 6, "        Version: 0.0.0          ");
+  cputsxy(hxp + 17, yps + 6, version);
+
+  chlinexy(1, yps + 8, 30);
+
 #else
   cputsxy(hxp, yps + 4, "                                ");
   revers(0);

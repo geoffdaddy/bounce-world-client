@@ -11,6 +11,10 @@
 #include "conio_wrapper.h"
 #endif
 
+#define USE_PLATFORM_SPECIFIC_INPUT
+
+extern int getPlatformKey();
+
 void press_key() {
 	
 	chlinexy(6, 20, 28);
@@ -20,16 +24,22 @@ void press_key() {
 	revers(0);
 	chlinexy(6, 22, 28);
 
+	// while(1);
 	// we will periodically ping the server while waiting for the user to press a key
 	// so that the client does not time out and get removed from the server
+	// Process any waiting keystrokes
+#ifdef USE_PLATFORM_SPECIFIC_INPUT
+	while(getPlatformKey() < 0x08 ) {
+#else
 	while (kbhit() == 0) {
+#endif
 		fetch_client_state();
 		// 20/60th of a second - enough to stop spamming, but react to user input fast enough.
 		pause(20);
 	}
 
 	// fetch the key so it doesn't get act upon
-#ifndef _CMOC_VERSION_
+#if !defined (_CMOC_VERSION_) && !defined (USE_PLATFORM_SPECIFIC_INPUT)
 	cgetc();
 #endif
 }

@@ -5,7 +5,7 @@
  *
  */
 
-#if !defined(__PMD85__) && !defined(_CMOC_VERSION_)
+#if !defined(__PMD85__) && !defined(_CMOC_VERSION_) && !defined(__ADAM__)
 #include <cc65.h>
 #endif
 #ifdef _CMOC_VERSION_
@@ -36,6 +36,8 @@
 #ifdef __PMD85__
 #include "conio_wrapper.h"
 #include "timer.h"
+#elif defined __ADAM__
+#include "conio_helpers.h"
 #endif
 
 extern uint16_t fn_network_bw;
@@ -52,6 +54,9 @@ int main(void)
 #endif
   init_appkey();
 
+#ifdef __ADAM__
+  init_vdp();
+#endif
   // print app information and get the URL/name
   get_info();
   clrscr();  
