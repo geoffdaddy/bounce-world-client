@@ -18,13 +18,13 @@ void initPlatformKeyboardInput(void)
 int getPlatformKey()
 {
     int ch;
-    eos_end_read_keyboard();
-
-    ch = eos_read_keyboard();
-    if (ch>1)
-    {
-    eos_start_read_keyboard();
+    ch = eos_end_read_keyboard();
+    if (ch>1) {
+      eos_start_read_keyboard();
     }
+    else //don't worry about negative returns, set to zero
+        ch=0;
+
     return ch;
 
 }
@@ -45,8 +45,9 @@ void get_line(char* buf, uint8_t max_len)
     gotoxy(x,y);
     cursor_pos(x,y);
 
-    while (key = getPlatformKey())
+    while (true)
     {
+        key = getPlatformKey();
         //   smartkeys_sound_play(SOUND_KEY_PRESS);
         if (key == KEY_RETURN)
         {

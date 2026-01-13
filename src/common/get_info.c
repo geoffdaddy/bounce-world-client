@@ -36,7 +36,7 @@ char hxp = 5;
 char txp = 4;
 #elif defined(__ADAM__)
 char hxp = 0;
-char txp = 4;
+char txp = 2;
 #else
 char hxp = 4;
 char txp = 3;
@@ -78,7 +78,7 @@ void get_info_changes()
       c = (char)kbhit();
     }
 #elif defined (USE_PLATFORM_SPECIFIC_INPUT)
-    while(c == 0) 
+    while(c <= 0) 
     {
       c = getPlatformKey();
     }
@@ -86,7 +86,6 @@ void get_info_changes()
     while (kbhit() == 0) ;
     c = cgetc();
 #endif
-
     switch (c) {
 
       case 'S':
@@ -116,7 +115,7 @@ void show_header() {
   clrscr();
   init_sound();
 #ifdef __ADAM__
-  chlinexy(hxp-1, yps - 1, 30);
+  chlinexy(hxp+1, yps - 1, 30);
 #else
   chlinexy(hxp-2, yps - 1, 36);
 #endif
@@ -143,12 +142,11 @@ void show_header() {
   chlinexy(hxp-2, yps + 8, 36);
 #elif defined __ADAM__
   cputsxy(hxp, yps + 4, " ADAM version by Geoff Oltmans" );
-  cputsxy(hxp, yps + 5, "                                ");
   revers(0);
-  cputsxy(hxp, yps + 6, "        Version: 0.0.0          ");
-  cputsxy(hxp + 17, yps + 6, version);
+  cputsxy(hxp, yps + 5, "        Version: 0.0.0          ");
+  cputsxy(hxp + 17, yps + 5, version);
 
-  chlinexy(1, yps + 8, 30);
+  chlinexy(hxp+1, yps + 7, 30);
 
 #else
   cputsxy(hxp, yps + 4, "                                ");
@@ -195,8 +193,11 @@ void cput_rev1(char *s) {
 }
 
 void show_menu() {
+#if defined (__ADAM__)
+  chlinexy(txp, 20, 28);
+#else
   chlinexy(txp + 3, 20, 28);
-
+#endif
   cputsxy(txp + 4, 21, "Change ");
   cput_rev1("Server ");
 
@@ -208,7 +209,11 @@ void show_menu() {
   cputs("Press a key to continue");
   revers(0);
 
+#if defined (__ADAM__)
+  chlinexy(txp, 23, 28);
+#else
   chlinexy(txp + 3, 23, 28);
+#endif
 }
 
 void get_info()

@@ -4,11 +4,15 @@
 
 
 uint8_t is_alt_screen;
+extern uint16_t _tms9918_pattern_name;
 
 void swap_buffer()
 {
   is_alt_screen = !is_alt_screen;
-
+  if (is_alt_screen)
+    _tms9918_pattern_name == 0x1c00;
+  else
+    _tms9918_pattern_name == 0x1800;
 }
 
 void show_other_screen()
