@@ -1,13 +1,14 @@
+#ifdef __ADAM__
+
 #include <stdint.h>
 #include "chardef.h"
 #include <video/tms99x8.h>
 #include "conio_helpers.h"
 #include <sys/ioctl.h>
 #include <interrupt.h>
+#include <stdio.h>
 
-#ifdef __ADAM__
-
-extern uint8_t is_alt_screen;
+extern uint16_t _tms9918_pattern_name;
 
 //reaching around the stdio/conio info in z88dk here...
 extern char _console_x;
@@ -34,21 +35,16 @@ void init_vdp()
 }
 
 void cputsxy(uint8_t x, uint8_t y, char *s) {
-  uint16_t vramaddr;
+  uint16_t vramaddr = _tms9918_pattern_name;
   uint16_t count = strlen(s);
   _console_x = x;
   _console_y = y;
 
   if (count == 0 ) return;
-
-  if (is_alt_screen)
-    vramaddr = 0x1c00;
-  else
-    vramaddr = 0x1800; //base address for name table in mode 1
   
   vramaddr += (_console_y << 5) + _console_x;
 
-  if ((vramaddr + count) > 0x1800+768) return;
+  if ((vramaddr + count) > _tms9918_pattern_name+768) return;
   
   vdp_vwrite(s, vramaddr,count);
   //update x/y
@@ -65,13 +61,8 @@ void cputcxy(uint8_t x, uint8_t y, char c) {
 
 int cputc(char c)
 {
-  uint16_t vramaddr;
+  uint16_t vramaddr = _tms9918_pattern_name;
   char temp = c;
-
-  if (is_alt_screen)
-    vramaddr = 0x1c00;
-  else
-    vramaddr = 0x1800; //base address for name table in mode 1
 
   vramaddr += (_console_y << 5) + _console_x;
   vdp_vwrite(&temp, vramaddr,1);
@@ -134,13 +125,7 @@ unsigned char revers(unsigned char onoff)
 
 void clrscr(void)
 {
-  uint16_t vramaddr;
-
-  if (is_alt_screen)
-    vramaddr = 0x1c00;
-  else
-    vramaddr = 0x1800; //base address for name table in mode 1
-
+  uint16_t vramaddr = _tms9918_pattern_name;
   vdp_vfill(vramaddr,0,0x300);
   _console_x = 0;
   _console_y = 0;

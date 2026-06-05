@@ -1,8 +1,6 @@
 // #include <atari.h>
 #if !defined (_CMOC_VERSION_)
-#if !defined(__ADAM__)
 #include <conio.h>
-#endif
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,8 +20,6 @@
 
 #ifdef __PMD85__
 #include "conio_wrapper.h"
-#elif defined __ADAM__
-#include "conio_helpers.h"
 #endif
 
 char endpoint_input[61];
